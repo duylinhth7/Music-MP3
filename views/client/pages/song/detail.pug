@@ -1,0 +1,18 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+
+block main 
+    .container 
+        +box-head(song.title)
+        .inner-action 
+            div(class="inner-time") <i class="fa-regular fa-clock"></i> 20/10/2024
+            div(class="inner-singer") <i class="fa-solid fa-microphone"></i> #{singer.fullName}
+            div(class="inner-topic") <i class="fa-solid fa-music"></i> #{topic.title}
+            div(class="inner-like") <i class="fa-regular fa-thumbs-up"></i> #{song.like} thích 
+            div(class="inner-favourite") <i class="fa-regular fa-heart"></i> Bài hát yêu thích 
+        .inner-play 
+            div(class="inner-image")
+                img(src=song.avatar)
+            div(class="aplayer")
+block script 
+    script(src="APlayer.min.js") 

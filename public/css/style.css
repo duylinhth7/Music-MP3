@@ -1,0 +1,129 @@
+/* html {
+    height: 100%;
+}
+body{
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+} */
+/* Header */
+.header{
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+
+}
+.header ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+}
+.header ul li {
+    margin-right: 10px;
+}
+.header ul li a{
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    background: #8E46CD;
+    color: #fff;
+    padding: 5px 7px;
+    border-radius: 5px;
+    font-weight: 600;
+}
+.header .inner-logo img{
+    width: 50%;
+    height: auto;
+    object-fit: cover;
+}
+/*End Header */
+
+/* Main */
+.main{
+    height: 100%;
+    flex: 1;
+}
+/* End main */
+
+/* Footer */
+.footer{
+    background: #000;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}
+/* End footer */
+
+
+
+/* Mixin */
+.box-head{
+    color: #E66A5B;
+    font-weight: 600;
+    font-style: italic;
+}
+/* End Mixin */
+
+
+
+/* LIST SONG */
+.song-item {
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .song-item:hover {
+    transform: translateY(-4px);
+  }
+  
+  .song-item .inner-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .song-item .inner-content {
+    padding: 10px 12px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .song-item .inner-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .song-item .inner-name:hover {
+    color: #007bff;
+  }
+  
+  .song-item .inner-singer,
+  .song-item .inner-like,
+  .song-item .inner-time {
+    font-size: 13px;
+    color: #777;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  
+/* end list song */
+
+
