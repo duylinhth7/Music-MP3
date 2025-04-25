@@ -100,3 +100,49 @@ export const favourite = async (req: Request, res: Response):Promise<void> => {
         
     }
 }
+
+//[PATCH] /song/like/:type/:idSong
+export const like = async (req: Request, res: Response):Promise<void> => {
+    try {
+        const idSong:string = req.params.idSong;
+        const idUser:string = req.params.idUser;
+        const checkIdUser = await User.findOne({
+            _id: idUser,
+            deleted: false,
+            status: "active"
+        });
+        if(checkIdUser){
+            const isLike = await Song.findOne({
+                _id: idSong,
+                like: idUser
+            });
+            const songUpdate = await Song.findOneAndUpdate({
+                _id: idSong
+            }, isLike ? { $pull: {like: idUser}} : { $push: {like: idUser}}, { new: true, select: "like" });
+            if (!songUpdate) {
+                res.json({
+                    code: 404,
+                    message: "Không tìm thấy bài hát!"
+                });
+                return;
+            }
+            res.json({
+                code: 200,
+                totalLike: songUpdate.like.length,
+                message: "Cập nhật thành công!"
+            });
+        } else {
+            res.json({
+                code: 400,
+                message: "Tài khoản không hợp lệ!"
+            })
+        }
+    } catch (error) {
+        res.json({
+            code: 400,
+            message: "Lỗi!"
+        });
+    }
+
+
+}

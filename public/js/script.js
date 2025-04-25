@@ -35,3 +35,31 @@ if (favourite) {
     })
 }
 //end inner-favourite
+
+//Like
+const like = document.querySelector(".inner-like");
+if(like) {
+    like.addEventListener("click", () => {
+        const idUser = like.getAttribute("id-user");
+        if(idUser){
+            const idSong = dataSong._id;
+            // const isLike = like.classList.contains("active");
+            // const typeLike = isLike ? "unLike" : "like";
+            const link = `/songs/like/${idSong}/${idUser}`;
+            fetch(link, {method: "PATCH"})
+                .then(res => res.json())
+                .then(data => {
+                    if (data.code == 200) {
+                        const totalLike = data.totalLike;
+                        const span = like.querySelector("span");
+                        span.innerHTML = `${totalLike} thích`
+                        like.classList.toggle("active");
+
+                    } else {
+                        alert("Chưa đăng nhập!")
+                    }
+                })
+        }
+    })
+}
+//End Like

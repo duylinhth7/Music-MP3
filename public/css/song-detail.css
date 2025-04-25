@@ -65,3 +65,14 @@
 .inner-favourite.active i{
     font-weight: 900;
 }
+
+.inner-like{
+    cursor: pointer;
+}
+.inner-like.active {
+    color: blue;
+}
+.inner-like.active i{
+    font-weight: 900;
+}
+
