@@ -1,6 +1,7 @@
 extends ../../layouts/default.pug
 include ../../mixins/box-head.pug
-
+block css 
+    link(rel="stylesheet", href="/css/song-detail.css")
 block main 
     .container 
         +box-head(song.title)
@@ -9,10 +10,13 @@ block main
             div(class="inner-singer") <i class="fa-solid fa-microphone"></i> #{singer.fullName}
             div(class="inner-topic") <i class="fa-solid fa-music"></i> #{topic.title}
             div(class="inner-like") <i class="fa-regular fa-thumbs-up"></i> #{song.like} thích 
-            div(class="inner-favourite") <i class="fa-regular fa-heart"></i> Bài hát yêu thích 
-        .inner-play 
+            div(class=(user && user.favourite.includes(song.id) ? "inner-favourite active" : "inner-favourite"))  <i class="fa-regular fa-heart"></i> Bài hát yêu thích 
+        .inner-play(dataSong = song dataSinger = singer) 
             div(class="inner-image")
                 img(src=song.avatar)
-            div(class="aplayer")
+            div(id="aplayer")
+        .inner-info 
+            .inner-description #{song.description}
+            .inner-lyrics !{song.lyrics}
 block script 
-    script(src="APlayer.min.js") 
+        

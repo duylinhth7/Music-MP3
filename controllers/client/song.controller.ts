@@ -2,6 +2,7 @@ import { Request, Response } from "express"
 import Topics from "../../models/topic.model";
 import Song from "../../models/song.model";
 import Singers from "../../models/singer.model";
+import User from "../../models/user.model";
 
 
 //[GET] //songs/slugTopic
@@ -44,7 +45,7 @@ export const detailSong = async (req:Request, res:Response):Promise<void> => {
         });
         const singer = await Singers.findOne({
             _id: song.singerId
-        });
+        }).select("fullName slug");
         const topic = await Topics.findOne({
             _id: song.topicId
         });
@@ -56,6 +57,45 @@ export const detailSong = async (req:Request, res:Response):Promise<void> => {
                 topic: topic
             }
         )
+    } catch (error) {
+        
+    }
+}
+
+//[PATCH] /song/favourite/:type/:idSong
+export const favourite = async (req: Request, res: Response):Promise<void> => {
+    try {
+        if(res.locals.user){
+            const userId:string = res.locals.user.id;
+            const type: string = req.params.type;
+            const idSong:string = req.params.idSong;
+            if(type == "favourite"){
+                await User.updateOne({
+                    _id: userId
+                }, {
+                    $push: {favourite: idSong}
+                });
+                res.json({
+                    code: 200,
+                    message: "Thêm thành công!"
+                });
+            } else {
+                await User.updateOne({
+                    _id: userId
+                }, {
+                    $pull: {favourite: idSong}
+                });
+                res.json({
+                    code: 200,
+                    message: "Xóa khỏi danh sách yêu thích thành công!"
+                })
+            }
+        } else {
+            res.json({
+                code: 400,
+                message: "Vui lòng đăng nhập!"
+            })
+        }
     } catch (error) {
         
     }

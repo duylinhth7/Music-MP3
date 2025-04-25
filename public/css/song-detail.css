@@ -1,0 +1,67 @@
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    font-family: Arial, sans-serif;
+}
+
+.inner-action {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 20px 0;
+    font-size: 16px;
+}
+
+.inner-action div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.inner-play {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.inner-image img {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+#aplayer {
+    width: 100%;
+}
+
+.inner-info {
+    margin-top: 30px;
+}
+
+.inner-description {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.inner-lyrics {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    white-space: pre-line;
+    font-size: 16px;
+    line-height: 1.6;
+}
+.inner-favourite{
+    cursor: pointer;
+}
+.inner-favourite.active {
+    color: red;
+}
+.inner-favourite.active i{
+    font-weight: 900;
+}
