@@ -1,3 +1,22 @@
+//SHOW Flash
+function showFlashMessage(message) {
+    // Tạo 1 thẻ div để chứa flash
+    const flash = document.createElement('div');
+    flash.className = 'flash-message';
+    flash.textContent = message;
+
+    // Gắn vào body
+    document.body.appendChild(flash);
+
+    // Cho flash tự biến mất sau 2-3 giây
+    setTimeout(() => {
+        flash.remove();
+    }, 3000);
+}
+
+//End show flash
+
+
 //Aplayer
 const dataSong = JSON.parse(document.querySelector("[datasong]").getAttribute("datasong"));
 const dataSinger = JSON.parse(document.querySelector("[datasinger]").getAttribute("datasinger"));
@@ -28,8 +47,9 @@ if (favourite) {
             .then(data => {
                 if (data.code == 200) {
                     favourite.classList.toggle("active");
+                    showFlashMessage("Cập nhật thành công!")
                 } else {
-                    alert("Chưa đăng nhập!")
+                    showFlashMessage("Chưa đăng nhập!")
                 }
             })
     })
@@ -56,7 +76,7 @@ if(like) {
                         like.classList.toggle("active");
 
                     } else {
-                        alert("Chưa đăng nhập!")
+                        showFlashMessage("Vui lòng đăng nhập!")
                     }
                 })
         }
