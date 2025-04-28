@@ -151,3 +151,54 @@ a {
 }
 
 /* end flash */
+
+
+/* SEARCH SUGGEST */
+.inner-search .form-suggest{
+  position: relative;
+}
+.inner-search .inner-suggest {
+  display: none;
+}
+.inner-suggest.show{
+  display: inline-block;
+  position: absolute;
+  width: 100%;
+  top: 100%;
+}
+.inner-suggest .inner-item:hover {
+  background-color: #ddd;
+  transition: 0.3s ease-in-out;
+}
+.inner-list .inner-item{
+  padding: 3px;
+  display: flex;
+  border: 1px solid #ddd;
+  align-items: center;
+  background-color: #fff;
+  border-bottom: 1px solid #eee;
+}
+.inner-suggest .inner-image{
+  padding: 0;
+  width: 65px;
+  height: 65px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.inner-suggest .inner-info {
+  margin: 0;
+}
+.inner-suggest img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+.inner-suggest .inner-title {
+  color: #000;
+  font-weight: 700;
+}
+.inner-suggest .inner-singer {
+  font-weight: 700;
+}
+
+/* END SEARCH SEGGEST */

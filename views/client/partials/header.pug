@@ -5,7 +5,18 @@ header.header
                 .inner-logo
                     a(href="/")
                         img(src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfq1kNo3HTwBVKm3bjwaW6W_TJz-s2vs4fDA&s")
-            .col-9 
+            .col-9.d-flex 
+                .inner-search 
+                    form(
+                        class="d-flex form-suggest"
+                        action="/search/detail"
+                        method="GET"
+                    ) 
+                        input.form-control.me-2(type="search", name="keyword" placeholder="Search", aria-label="Search")
+                        button.btn.btn-success(type="submit") Search
+                        .inner-suggest.show
+                            a(href="ok" class="inner-list")
+
                 .inner-menu
                     ul 
                         li 
@@ -20,4 +31,3 @@ header.header
                                 a(href="/user/login") Đăng nhập 
                             li
                                 a(href="/user/register") Đăng ký
-                        

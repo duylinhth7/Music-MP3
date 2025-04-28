@@ -18,9 +18,11 @@ function showFlashMessage(message) {
 
 
 //Aplayer
-const dataSong = JSON.parse(document.querySelector("[datasong]").getAttribute("datasong"));
-const dataSinger = JSON.parse(document.querySelector("[datasinger]").getAttribute("datasinger"));
-if (dataSong && dataSinger) {
+const dataSong1 = document.querySelector("[datasong]");
+const dataSinger1 = document.querySelector("[datasinger]");
+if (dataSong1 && dataSinger1) {
+    const dataSong = JSON.parse(dataSong1.getAttribute("datasong"));
+    const dataSinger = JSON.parse(dataSinger1.getAttribute("datasinger"));
     const ap = new APlayer({
         container: document.querySelector("#aplayer"),
         audio: [{
@@ -38,11 +40,12 @@ if (dataSong && dataSinger) {
 const favourite = document.querySelector(".inner-favourite");
 if (favourite) {
     favourite.addEventListener("click", () => {
+        const dataSong = JSON.parse(dataSong1.getAttribute("datasong"));
         const idSong = dataSong._id;
         const isActive = favourite.classList.contains("active");
         const typeFavourite = isActive ? "unFavourite" : "favourite";
         const link = `/songs/favourite/${typeFavourite}/${idSong}`
-        fetch(link, {method: "PATCH"})
+        fetch(link, { method: "PATCH" })
             .then(res => res.json())
             .then(data => {
                 if (data.code == 200) {
@@ -58,15 +61,17 @@ if (favourite) {
 
 //Like
 const like = document.querySelector(".inner-like");
-if(like) {
+if (like) { 
     like.addEventListener("click", () => {
         const idUser = like.getAttribute("id-user");
-        if(idUser){
+        if (idUser) {
+            const dataSong = JSON.parse(dataSong1.getAttribute("datasong"));
+            const dataSinger = JSON.parse(dataSinger1.getAttribute("datasinger"));
             const idSong = dataSong._id;
             // const isLike = like.classList.contains("active");
             // const typeLike = isLike ? "unLike" : "like";
             const link = `/songs/like/${idSong}/${idUser}`;
-            fetch(link, {method: "PATCH"})
+            fetch(link, { method: "PATCH" })
                 .then(res => res.json())
                 .then(data => {
                     if (data.code == 200) {
@@ -79,7 +84,45 @@ if(like) {
                         showFlashMessage("Vui lòng đăng nhập!")
                     }
                 })
+        } else {
+            showFlashMessage("Vui lòng đăng nhập!")
         }
     })
 }
 //End Like
+
+
+//SEARCH SUGGESS
+const formSearch = document.querySelector(".form-suggest");
+if (formSearch) {
+    const input = formSearch.querySelector("input[name='keyword']");
+    input.addEventListener("keyup", () => {
+        const keyword = input.value;
+        const link = `/search/suggest?keyword=${keyword}`;
+        fetch(link, { method: "GET" })
+            .then(res => res.json())
+            .then(data => {
+                if (data.code == 200) {
+                    const innerSuggest = formSearch.querySelector(".inner-suggest");
+                    innerSuggest.classList.add("show");
+                    const htmls = data.songs.map(item => {
+                        return `
+                                    <a href="/songs/detail/${item.slug}" class="inner-item">
+                                    <div class="inner-image">
+                                        <img src=${item.avatar} alt=${item.title}>
+                                    </div>
+                                    <div class="inner-info">
+                                        <div class="inner-title">${item.title}</div>
+                                        <div class="inner-singer">${item.infoSinger.fullName}</div>
+                                    </div>
+                                    </a>
+                             `;
+                    });
+                    const boxList = formSearch.querySelector(".inner-list");
+                    boxList.innerHTML = htmls.join("");
+                }
+            })
+
+    })
+}
+//END SEARCH SUGGEST
