@@ -1,8 +1,8 @@
 import { Request, Response } from "express"
-import Topics from "../../models/topic.model";
-import Song from "../../models/song.model";
-import Singers from "../../models/singer.model";
-import User from "../../models/user.model";
+import Topics from "../../models/client/topic.model";
+import Song from "../../models/client/song.model";
+import Singers from "../../models/client/singer.model";
+import User from "../../models/client/user.model";
 
 
 //[GET] //songs/slugTopic
@@ -62,7 +62,7 @@ export const detailSong = async (req:Request, res:Response):Promise<void> => {
     }
 }
 
-//[PATCH] /song/favourite/:type/:idSong
+//[PATCH] /songs/favourite/:type/:idSong
 export const favourite = async (req: Request, res: Response):Promise<void> => {
     try {
         if(res.locals.user){
@@ -101,7 +101,7 @@ export const favourite = async (req: Request, res: Response):Promise<void> => {
     }
 }
 
-//[PATCH] /song/like/:type/:idSong
+//[PATCH] /songs/like/:type/:idSong
 export const like = async (req: Request, res: Response):Promise<void> => {
     try {
         const idSong:string = req.params.idSong;
@@ -145,4 +145,19 @@ export const like = async (req: Request, res: Response):Promise<void> => {
     }
 
 
+}
+
+
+//PATCH /songs/view/idSong
+export const view = async (req: Request, res: Response):Promise<void> => {
+    const idSong:string = req.params.idSong;
+    const song = await Song.findOne({
+        _id: idSong
+    }).select("view");
+    const newView = song.view + 1;
+    await Song.updateOne({
+        _id: idSong
+    }, {
+        view: newView
+    });
 }

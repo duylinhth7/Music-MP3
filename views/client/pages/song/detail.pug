@@ -1,7 +1,7 @@
 extends ../../layouts/default.pug
 include ../../mixins/box-head.pug
 block css 
-    link(rel="stylesheet", href="/css/song-detail.css")
+    link(rel="stylesheet", href="/client/css/song-detail.css")
 block main 
     .container 
         +box-head(song.title)
@@ -9,6 +9,7 @@ block main
             div(class="inner-time") <i class="fa-regular fa-clock"></i> 20/10/2024
             div(class="inner-singer") <i class="fa-solid fa-microphone"></i> #{singer.fullName}
             a(class="inner-topic" href=`/songs/${topic.slug}`) <i class="fa-solid fa-music"></i> #{topic.title}
+            div(class="inner-view") <i class="fa-solid fa-headphones"></i> #{song.view} Lượt nghe
             if(user)
                 div(class=user && song.like.includes(user.id) ? "inner-like active" : "inner-like" id-user=user.id) <i class="fa-regular fa-thumbs-up"></i>
                     span #{song.like.length} thích 

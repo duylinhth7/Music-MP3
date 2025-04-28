@@ -32,6 +32,10 @@ if (dataSong1 && dataSinger1) {
             cover: `${dataSong.avatar}`
         }]
     });
+    ap.on('ended', () => {
+        const link = `/songs/view/${dataSong._id}`;
+        fetch(link, {method:"PATCH"})
+    })
 }
 
 //End Aplayer

@@ -1,9 +1,12 @@
 import express, {Express, Request, Response} from 'express';
 import * as database from "./config/database";
-import indexRouterClinet from './routes/index.route';
+import indexRouterClient from './routes/client/index.route';
 import dotenv from "dotenv";
+import path from "path";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
+import indexRouterAdmin from './routes/admin/index.route';
+import { systemConfig } from './config/system';
 
 
 dotenv.config();
@@ -17,9 +20,12 @@ app.set("views", "./views");
 app.set("view engine", "pug");
 app.use(bodyParser.urlencoded())
 app.use(cookieParser());
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
+app.locals.prefixAdmin = systemConfig.prefixAdmin
 
 //Router
-indexRouterClinet(app);
+indexRouterClient(app);
+indexRouterAdmin(app);
 //end Router
 
 app.listen(port, () => {

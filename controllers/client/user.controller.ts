@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
 import md5 from "md5";
-import User from "../../models/user.model";
+import User from "../../models/client/user.model";
 import * as genarateHelper from "../../helpers/genarate";
 import { ppid } from "process";
 //[GET] /user/register

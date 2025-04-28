@@ -1,0 +1,99 @@
+extends ../../layouts/default.pug
+block main 
+    //- div #{songs}
+    .card-body 
+        .row
+        .col-3.mb-3
+            if(1)
+                a(  href=`${prefixAdmin}/songs/create`
+                    class="btn btn-outline-success"
+                ) + Thêm bài hát mới
+
+
+        table(class="table table-hover table-sm"
+                checkbox-mutil
+            )
+            thead 
+                tr 
+                    th 
+                        input(type="checkbox"
+                                name="checkall"
+                            )
+                    th STT 
+                    th Hình ảnh 
+                    th Tiêu đề
+                    th Ca sĩ
+                    th Chủ đề
+                    th Trạng thái 
+                    //- th Người tạo
+                    //- th Người chỉnh sửa gần nhất
+                    th Hành động
+            tbody
+                each item, index in songs
+                    tr 
+                        td 
+                            input(type="checkbox"
+                                    name="id"
+                                    value=item.id
+                            )
+                        td #{index+1}
+                        td 
+                            img(src=item.avatar,
+                            width="50px",
+                            height="auto")
+                        td #{item.title}
+                        td #{item.infoSinger.fullName}
+                        td #{item.topic.title}
+                        td
+                            if(0)
+                                if(item.status == "active")
+                                    button(
+                                        type="button"
+                                        class="badge bg-success"
+                                        data-status = item.status 
+                                        data-id = item.id
+                                        button-change-status
+                                    ) Hoạt động
+                                else
+                                    button(
+                                        type="button"
+                                        class="badge bg-danger"
+                                        data-status = item.status 
+                                        data-id = item.id
+                                        button-change-status
+                                    ) Ngưng hoạn động
+                            else 
+                                if(item.status == "active")
+                                    button(
+                                        readOnly
+                                        type="button"
+                                        class="badge bg-success"
+                                    ) Hoạt động
+                                else
+                                    button(
+                                        type="button"
+                                        class="badge bg-danger"
+                                    ) Ngưng hoạn động
+                        //- td 
+                        //-     p #{item.accountFullName}
+                        //-     +formatDate(item.createdBy.createdAt)
+                        //- td 
+                        //-     - const updatedName = item.updatedBy[item.updatedBy.length - 1]
+                        //-     if(updatedName)
+                        //-         p #{updatedName.accountFullName}
+                        td
+                            if(1)
+                                a(
+                                    class="btn btn-info"
+                                    href=`${prefixAdmin}/product/detail/${item.id}`
+                                ) Chi tiết
+                            if(1)
+                                a(
+                                    class="btn btn-warning btn-sm"
+                                    href=`${prefixAdmin}/product/edit/${item.id}`
+                                ) Sửa
+                            if(1)
+                                button(class="btn btn-danger btn-sm ml-1"
+                                        button-delete 
+                                        data-id = item.id
+                                        ) Xóa

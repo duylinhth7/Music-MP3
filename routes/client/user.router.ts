@@ -1,6 +1,6 @@
 import { Router } from "express";
-import * as controller from "../controllers/client/user.controller";
-import * as userValidate from "../validate/user.validate";
+import * as controller from "../../controllers/client/user.controller";
+import * as userValidate from "../../validate/user.validate";
 const router:Router = Router();
 
 

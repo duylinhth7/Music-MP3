@@ -155,6 +155,7 @@ a {
 
 /* SEARCH SUGGEST */
 .inner-search .form-suggest{
+  z-index: 999;
   position: relative;
 }
 .inner-search .inner-suggest {
