@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
+import slug from "mongoose-slug-updater";
 
-
+mongoose.plugin(slug);
 const songSchema = new mongoose.Schema({
     title: String,
     avatar: String,
@@ -15,7 +16,13 @@ const songSchema = new mongoose.Schema({
     },
     audio: String,
     status: String,
-    slug: String,
+    slug: {
+        type: String,
+        slug: 'title',
+        unique: true
+    },
+    position: Number,
+    featured: String,
     deleted: {
         type: Boolean,
         default: false

@@ -5,8 +5,8 @@ block main
     h1(class="mb-4") Tạo mới bài hát
 
     form(
-        action=`${prefixAdmin}/product/create`
-        id="form-create-product"
+        action=`${prefixAdmin}/songs/create`
+        id="form-create-song"
         method='POST'
         enctype="multipart/form-data"
     )
@@ -20,14 +20,14 @@ block main
                 required
             )
         div(class="form-group mb-4")
-            label(for="product_category_id") Chọn chủ đề bài hát
-            select(name="product_category_id" class="form-control" id="product_category_id")
+            label(for="topicId") Chọn chủ đề bài hát
+            select(name="topicId" class="form-control" id="topicId")
                 option(value="" disable) --Chọn chủ đề--
                 each item in topics
                     option(value=item.id) #{item.title}
         div(class="form-group mb-4")
-            label(for="product_category_id") Chọn ca sĩ
-            select(name="product_category_id" class="form-control" id="product_category_id")
+            label(for="singerId") Chọn ca sĩ
+            select(name="singerId" class="form-control" id="singerId")
                 option(value="" disable) --Chọn ca sĩ--
                 each item in singers
                     option(value=item.id) #{item.fullName}
@@ -73,13 +73,13 @@ block main
 
 
         div(class="form-group")
-            label(for="thumbnail") Đường dẫn ảnh
+            label(for="avatar") Đường dẫn ảnh
             input(
                 type="file"
                 class="form-control"
-                id="thumbnail"
-                name="thumbnail"
-                accept="image/*"
+                id="avatar"
+                name="avatar"
+                accept="avatar/*"
                 inputImage
             )
             img(
@@ -92,38 +92,32 @@ block main
             ) x
 
         div(class="form-group")
-            label(for="price") Giá
+            label(for="audio") Đường dẫn audio
             input(
-                type="number"
+                type="file"
                 class="form-control"
-                id="price"
-                name="price"
-                value=0
-                min=0
-                required 
-            ) 
+                id="audio"
+                name="audio"
+                accept="audio/*"
+                inputAudio
+            )
+            audio(
+                src=""
+                previewAudio
+                class="preview-audio"
+                controls
+            )
+            div(class="close-preview-audio") x
 
         div(class="form-group")
-            label(for="discountPercentage") % giảm giá
-            input(
-                type="number"
-                class="form-control"
-                id="discountPercentage"
-                name="discountPercentage"
-                value=0
-                min=0
-            )                
+            label(for="lyrics") Lyrics bài hát
+            textarea(
+                type="text"
+                class="form-control tiny-mce"
+                id="lyrics"
+                name="lyrics"
+            )               
 
-        div(class="form-group")
-            label(for="discountPercentage") Số lượng
-            input(
-                type="number"
-                class="form-control"
-                id="stock"
-                name="stock"
-                value=1
-                min=0
-            ) 
 
         div(class="form-group")
             label(for="discountPercentage") Vị trí

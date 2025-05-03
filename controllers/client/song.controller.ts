@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
-import Topics from "../../models/client/topic.model";
-import Song from "../../models/client/song.model";
-import Singers from "../../models/client/singer.model";
+import Topics from "../../models/admin/topic.model";
+import Song from "../../models/admin/song.model";
+import Singers from "../../models/admin/singer.model";
 import User from "../../models/client/user.model";
 
 

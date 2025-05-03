@@ -1,9 +1,10 @@
 import { Request, Response } from "express"
-import Song from "../../models/client/song.model"
-import Singers from "../../models/client/singer.model";
-import Topics from "../../models/client/topic.model";
+import Song from "../../models/admin/song.model"
+import Singers from "../../models/admin/singer.model";
+import Topics from "../../models/admin/topic.model";
+import { systemConfig } from "../../config/system";
 
-
+const PATH = systemConfig.prefixAdmin;
 // [GET] /songs/index
 export const index = async (req:Request, res:Response):Promise<void> => {
     const songs = await Song.find({
@@ -31,4 +32,46 @@ export const create = async (req:Request, res:Response):Promise<void> => {
         topics: topics,
         singers: singers
     })
+}
+
+
+//[POST] /songs/create 
+export const createPost = async (req:Request, res:Response):Promise<void> => {
+    try {
+        interface Song {
+            title:string,
+            topicId:string,
+            singerId: string,
+            featured: string,
+            description?: string,
+            lyrics?: string,
+            position?: number,
+            status: string
+            avatar: string,
+            audio: string
+        };
+        let position = 0;
+        if(req.body.position){
+            position = req.body.position
+        } else {
+            position = await Song.countDocuments({deleted: false});
+        };
+        const song:Song = {
+            title: req.body.title,
+            topicId: req.body.topicId,
+            singerId: req.body.singerId,
+            featured: req.body.featured,
+            description: req.body.description,
+            lyrics: req.body.lyrics,
+            position: position,
+            status: req.body.status,
+            avatar: req.body.avatar[0],
+            audio: req.body.audio[0]
+        };
+        const newSong = new Song(song);
+        await newSong.save();
+        res.redirect(`${PATH}/songs`);
+    } catch (error) {
+        
+    }
 }

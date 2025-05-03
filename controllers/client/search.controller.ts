@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import unidecodeText from "../../helpers/unidecode";
-import Song from "../../models/client/song.model";
-import Topics from "../../models/client/topic.model";
-import Singers from "../../models/client/singer.model";
+import Song from "../../models/admin/song.model";
+import Topics from "../../models/admin/topic.model";
+import Singers from "../../models/admin/singer.model";
 export const search = async (req: Request, res:Response):Promise<void> => {
     let newSongs = [];
     const typeSearch:string = req.params.typeSearch;

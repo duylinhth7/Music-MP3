@@ -8,7 +8,6 @@ import cookieParser from "cookie-parser";
 import indexRouterAdmin from './routes/admin/index.route';
 import { systemConfig } from './config/system';
 
-
 dotenv.config();
 database.connect();
 const app: Express =  express();
