@@ -110,3 +110,26 @@ export const editPatch = async (req:Request, res:Response):Promise<void> => {
         res.redirect("back");
     }
 }
+
+//[DELETE] /songs/delete/:id
+export const deleteSong =  async (req:Request, res:Response):Promise<void> => {
+    try {
+        console.log("ko")
+        const idSong:string = req.params.id;
+        await Song.updateOne({
+            _id: idSong
+        }, {
+            deleted: true,
+            deletedAt: new Date
+        });
+        res.json({
+            code: 200,
+            message: "Xóa bài hát thành công!"
+        })
+    } catch (error) {
+        res.json({
+            code: 400,
+            message: "Lỗi!"
+        })
+    }
+}
