@@ -25,16 +25,18 @@ if (dataSong1 && dataSinger1) {
     const dataSinger = JSON.parse(dataSinger1.getAttribute("datasinger"));
     const ap = new APlayer({
         container: document.querySelector("#aplayer"),
+        lrcType: 1,
         audio: [{
             name: `${dataSong.title}`,
             artist: `${dataSinger.fullName}`,
             url: `${dataSong.audio}`,
-            cover: `${dataSong.avatar}`
+            cover: `${dataSong.avatar}`,
+            lrc: `${dataSong.lyrics}`
         }]
     });
     ap.on('ended', () => {
         const link = `/songs/view/${dataSong._id}`;
-        fetch(link, {method:"PATCH"})
+        fetch(link, { method: "PATCH" })
     })
 }
 
@@ -65,7 +67,7 @@ if (favourite) {
 
 //Like
 const like = document.querySelector(".inner-like");
-if (like) { 
+if (like) {
     like.addEventListener("click", () => {
         const idUser = like.getAttribute("id-user");
         if (idUser) {
