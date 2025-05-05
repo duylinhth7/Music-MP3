@@ -76,10 +76,11 @@ if(buttonDelete){
                 fetch(link, {method: "DELETE"})
                     .then(res => res.json())
                     .then(data => {
-                        console.log(data)
                         if(data.code == 200) {
+                            setTimeout(() => {
+                                location.reload()
+                            }, 2000)
                             showFlashMessage(data.message);
-                            location.reload();
                         } else  {
                             showFlashMessage(data.message)
                         }
@@ -89,3 +90,43 @@ if(buttonDelete){
     })
 }
 //End Xóa bài hát
+
+
+//button change status
+const buttonChangeStatus = document.querySelectorAll("[button-change-status]");
+if(buttonChangeStatus){
+    buttonChangeStatus.forEach(button => {
+        button.addEventListener("click", () => {
+            const idSong = button.getAttribute("data-id");
+            const statusCurrent = button.getAttribute("data-status");
+            const statusChange = statusCurrent === "active" ? "inactive" : "active";
+            const link = `${PATH}/songs/changeStatus/${idSong}/${statusChange}`;
+            fetch(link, {method: "PATCH"})
+                .then(res => res.json())
+                .then(data => {
+                    if(data.code == 200){
+                        showFlashMessage(data.message);
+                        setTimeout(() => {
+                            location.reload()
+                        }, 2000)
+                    }
+                })
+        })
+    })
+}
+//End button change status
+
+
+//panigation
+const buttonPanigation = document.querySelectorAll("[button-panigation]");
+buttonPanigation.forEach(button => {
+    if (button) {
+        const url = new URL(window.location.href);
+        button.addEventListener("click", () => {
+            const page = button.getAttribute("button-panigation");
+            url.searchParams.set("page", page);
+            window.location.href = url.href;
+        })
+    }
+})
+//end panigation

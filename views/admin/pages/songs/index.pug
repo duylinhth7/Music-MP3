@@ -1,4 +1,5 @@
 extends ../../layouts/default.pug
+include ../../mixins/panigation.pug
 block main 
     //- div #{songs}
     .card-body 
@@ -45,7 +46,7 @@ block main
                         td #{item.infoSinger.fullName}
                         td #{item.topic.title}
                         td
-                            if(0)
+                            if(1)
                                 if(item.status == "active")
                                     button(
                                         type="button"
@@ -97,3 +98,4 @@ block main
                                         button-delete 
                                         data-id = item.id
                                         ) Xóa
+    +panigation(panigation)

@@ -3,23 +3,39 @@ import Song from "../../models/admin/song.model"
 import Singers from "../../models/admin/singer.model";
 import Topics from "../../models/admin/topic.model";
 import { systemConfig } from "../../config/system";
+import panigationHelper from "../../helpers/panigation";
 
 const PATH = systemConfig.prefixAdmin;
 // [GET] /songs/index
 export const index = async (req:Request, res:Response):Promise<void> => {
-    const songs = await Song.find({
-        deleted: false,
-        status: "active"
-    }).select("-description -lyrics");
+    let find = {
+        deleted: false
+    }
+    //Panigation
+    const countSongs = await Song.countDocuments({deleted: false});
+    const objectPanigation = panigationHelper(
+        {
+            currentPage: 1,
+            limitItems: 3
+        },
+        req.query,
+        countSongs
+    );
+    //End Panigation
+
+
+    const songs = await Song.find(find).select("-description -lyrics").limit(objectPanigation.limitItems).skip(objectPanigation.skipItems);
     for(const song of songs){
         const singer = await Singers.findOne({_id: song.singerId}).select("fullName");
         song["infoSinger"] = singer;
         const topic = await Topics.findOne({_id: song.topicId}).select("title");
         song["topic"] = topic
-    }
+    };
+
     res.render("admin/pages/songs/index", {
         title: "Danh sách bài hát",
-        songs: songs
+        songs: songs,
+        panigation: objectPanigation
     })
 }
 
@@ -114,7 +130,6 @@ export const editPatch = async (req:Request, res:Response):Promise<void> => {
 //[DELETE] /songs/delete/:id
 export const deleteSong =  async (req:Request, res:Response):Promise<void> => {
     try {
-        console.log("ko")
         const idSong:string = req.params.id;
         await Song.updateOne({
             _id: idSong
@@ -132,4 +147,27 @@ export const deleteSong =  async (req:Request, res:Response):Promise<void> => {
             message: "Lỗi!"
         })
     }
+}
+
+//[PATCH] /songs/changeStatus/:id/:status
+export const changeStatus =  async (req:Request, res:Response):Promise<void> => {
+    try {
+        const idSong:string = req.params.id;
+        const statusChange:string = req.params.status;
+        await Song.updateOne({
+            _id: idSong
+        }, {
+            status: statusChange
+        });
+        res.json({
+            code: 200,
+            message: "Thay đổi trạng thái thành công!"
+        });
+    } catch (error) {
+        res.json({
+            code: 400,
+            message: "Thay đổi trạng không thái thành công!"
+        });
+    }
+
 }

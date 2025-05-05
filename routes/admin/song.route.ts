@@ -31,6 +31,7 @@ router.patch(
   controller.editPatch
 );
 
-router.delete("/delete/:id", controller.deleteSong)
+router.delete("/delete/:id", controller.deleteSong);
+router.patch("/changeStatus/:id/:status", controller.changeStatus);
 
 export const songsRouter: Router = router;
