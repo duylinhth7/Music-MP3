@@ -31,3 +31,23 @@ export const createSong = (req: Request, res:Response, next:NextFunction) => {
     };
     next();
 }
+
+export const editSong = (req: Request, res:Response, next:NextFunction) => {
+    if(!req.body.title){
+        res.redirect("back");
+        return;
+    };
+    if(!req.body.topicId){
+        res.redirect("back");
+        return;
+    };
+    if(!req.body.singerId){
+        res.redirect("back");
+        return;
+    };
+    if(!req.body.status){
+        res.redirect("back");
+        return;
+    };
+    next();
+}

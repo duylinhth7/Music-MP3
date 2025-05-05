@@ -7,6 +7,7 @@ import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import indexRouterAdmin from './routes/admin/index.route';
 import { systemConfig } from './config/system';
+import mothodOverride from "method-override";
 
 dotenv.config();
 database.connect();
@@ -15,6 +16,7 @@ const port:number | string = process.env.PORT || 3000;
 
 
 app.use(express.static("public"))
+app.use(mothodOverride("_method"))
 app.set("views", "./views");
 app.set("view engine", "pug");
 app.use(bodyParser.urlencoded())

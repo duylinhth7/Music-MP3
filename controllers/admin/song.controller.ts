@@ -75,3 +75,38 @@ export const createPost = async (req:Request, res:Response):Promise<void> => {
         
     }
 }
+
+//[GET] /songs/edit/:id
+export const edit = async (req:Request, res:Response):Promise<void> => {
+    const idSong:string = req.params.id;
+    const song = await Song.findOne({
+        _id: idSong,
+        deleted: false
+    });
+    const topics = await Topics.find({});
+    const singers = await Singers.find({
+        status: "active"
+    });
+    song["topicName"] = topics.find(item => item.id == song.topicId);
+    song["singerName"] = singers.find(item => item.id == song.singerId);
+    res.render("admin/pages/songs/edit", {
+        title: "Chỉnh sửa bài hát",
+        song: song,
+        topics: topics,
+        singers: singers
+    })
+}
+
+// [PATCH] /songs/edit
+export const editPatch = async (req:Request, res:Response):Promise<void> => {
+    try {
+        const dataUpdate = req.body;
+        const idSong:string = req.params.id
+        await Song.updateOne({
+            _id: idSong
+        }, dataUpdate);
+        res.redirect(PATH + "/songs")
+    } catch (error) {
+        res.redirect("back");
+    }
+}

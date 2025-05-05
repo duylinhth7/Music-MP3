@@ -19,5 +19,16 @@ router.post(
   songValidate.createSong,
   controller.createPost
 );
+router.get("/edit/:id", controller.edit);
+router.patch(
+  "/edit/:id",
+  upload.fields([
+    { name: "avatar", maxCount: 1 },
+    { name: "audio", maxCount: 1 },
+  ]),
+  uploadFields,
+  songValidate.editSong,
+  controller.editPatch
+);
 
 export const songsRouter: Router = router;
