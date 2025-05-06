@@ -2,6 +2,7 @@ import { Request, Response } from "express"
 import Singers from "../../models/admin/singer.model"
 import panigationHelper from "../../helpers/panigation";
 import { systemConfig } from "../../config/system";
+import { features } from "process";
 
 
 
@@ -81,5 +82,41 @@ export const editPatch = async(req:Request, res:Response):Promise<void> => {
         res.redirect(PATH + "/singers")
     } catch (error) {
         res.redirect("back")
+    }
+}
+
+//[GET] /singers/create
+export const create = async(req:Request, res:Response):Promise<void> => {
+    res.render("admin/pages/singers/create", {
+        title: "Thêm mới ca sĩ"
+    })
+}
+
+//[POST] /singer/create
+export const createPost = async(req:Request, res:Response):Promise<void> => {
+    try {
+        let position:number;
+        let avatar:string = "";
+        if(req.body.position){
+            position = parseInt(req.body.position);
+        } else {
+            position = await Singers.countDocuments({}) + 1;
+        };
+        if(req.body.avatar){
+            avatar = req.body.avatar;
+        }
+        const record = {
+            fullName: req.body.fullName,
+            featured: req.body.featured,
+            description: req.body.description,
+            position: position,
+            status: req.body.status,
+            avatar: avatar
+        }
+        const newSinger = new Singers(record);
+        await newSinger.save();
+        res.redirect(PATH + "/singers")
+    } catch (error) {
+        res.redirect("back");
     }
 }

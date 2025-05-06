@@ -2,7 +2,7 @@ import { Router } from "express";
 import * as controller from "../../controllers/admin/singers.controller";
 import multer from "multer";
 import { uploadSingle } from "../../middleware/admin/uploadCloud.middware";
-import * as songValidate from "../../validate/admin/song.validate";
+import * as singerValidate from "../../validate/admin/singer.validate";
 
 const upload = multer();
 const router: Router = Router();
@@ -15,6 +15,14 @@ router.patch(
   upload.single("avatar"),
   uploadSingle,
   controller.editPatch
+);
+router.get("/create", controller.create);
+router.post(
+  "/create",
+  upload.single("avatar"),
+  uploadSingle,
+  singerValidate.createSinger,
+  controller.createPost
 );
 
 export const singersRouter: Router = router;
