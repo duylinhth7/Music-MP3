@@ -97,10 +97,11 @@ const buttonChangeStatus = document.querySelectorAll("[button-change-status]");
 if(buttonChangeStatus){
     buttonChangeStatus.forEach(button => {
         button.addEventListener("click", () => {
-            const idSong = button.getAttribute("data-id");
+            const id = button.getAttribute("data-id");
             const statusCurrent = button.getAttribute("data-status");
+            const nameType = button.getAttribute("name-type");
             const statusChange = statusCurrent === "active" ? "inactive" : "active";
-            const link = `${PATH}/songs/changeStatus/${idSong}/${statusChange}`;
+            const link = `${PATH}/${nameType}/changeStatus/${id}/${statusChange}`;
             fetch(link, {method: "PATCH"})
                 .then(res => res.json())
                 .then(data => {
@@ -109,6 +110,8 @@ if(buttonChangeStatus){
                         setTimeout(() => {
                             location.reload()
                         }, 2000)
+                    } else {
+                        showFlashMessage("Lỗi, không thành công!")
                     }
                 })
         })
