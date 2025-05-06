@@ -13,7 +13,7 @@ const PATH = systemConfig.prefixAdmin;
 export const index = async(req:Request, res:Response):Promise<void> => {
 
     //Panigation
-    const countSingers = await Singers.countDocuments({});
+    const countSingers = await Singers.countDocuments({deleted: false});
     const objectPanigation = panigationHelper(
         {
             currentPage: 1,
@@ -25,7 +25,9 @@ export const index = async(req:Request, res:Response):Promise<void> => {
     //End Panigation
 
 
-    let find = {};
+    let find = {
+        deleted: false
+    };
     const singers = await Singers.find(find).limit(objectPanigation.limitItems).skip(objectPanigation.skipItems);
     res.render("admin/pages/singers/index", {
         title: "Danh sách ca sỹ",
@@ -118,5 +120,27 @@ export const createPost = async(req:Request, res:Response):Promise<void> => {
         res.redirect(PATH + "/singers")
     } catch (error) {
         res.redirect("back");
+    }
+}
+
+//[DELETE] /singers/delete/:id
+export const deleteSinger =  async (req:Request, res:Response):Promise<void> => {
+    try {
+        const id:string = req.params.id;
+        await Singers.updateOne({
+            _id: id
+        }, {
+            deleted: true,
+            deletedAt: new Date
+        });
+        res.json({
+            code: 200,
+            message: "Xóa thành công!"
+        })
+    } catch (error) {
+        res.json({
+            code: 400,
+            message: "Lỗi!"
+        })
     }
 }

@@ -11,5 +11,5 @@ block main
                         img(src=item.avatar)
                         div(class="card-body")
                             h5(class="cart-title") #{item.title}
-                            p(class="cart-text") #{item.description}
+                            p(class="cart-text") !{item.description}
                             a(href=`/songs/${item.slug}` class="btn btn-success") Xem chi tiết

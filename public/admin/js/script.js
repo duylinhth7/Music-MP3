@@ -64,13 +64,14 @@ if(closePreviewAudio){
 }
 //END PREVIEW AUDIO
 
-//Xóa bài hát
+//Nút Xóa
 const buttonDelete = document.querySelectorAll("[button-delete]");
 if(buttonDelete){
     buttonDelete.forEach(button => {
         button.addEventListener("click", () => {
             const idSong = button.getAttribute("data-id");
-            const link = `${PATH}/songs/delete/${idSong}`;
+            const nameType = button.getAttribute("name-type")
+            const link = `${PATH}/${nameType}/delete/${idSong}`;
             const isConfirm = confirm("Bạn có muốn xóa bài hát này không?");
             if(isConfirm){
                 fetch(link, {method: "DELETE"})
@@ -89,7 +90,7 @@ if(buttonDelete){
         })
     })
 }
-//End Xóa bài hát
+//End Nút Xóa
 
 
 //button change status

@@ -24,5 +24,6 @@ router.post(
   singerValidate.createSinger,
   controller.createPost
 );
+router.delete("/delete/:id", controller.deleteSinger);
 
 export const singersRouter: Router = router;
