@@ -26,5 +26,6 @@ router.patch(
 );
 router.patch("/changeStatus/:id/:status", controller.changeStatus);
 router.delete("/delete/:id", controller.deleteTopic);
+router.patch("/change-mutil", controller.changeMutil)
 
 export const topicsRouter: Router = router;

@@ -201,3 +201,49 @@ export const changeStatus = async (
     });
   }
 };
+
+//[PATCH] /songs/change-mutil
+export const changeMutil = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const idsArray = req.body.ids.split(",");
+  const typeEdit: string = req.body.type;
+  switch (typeEdit) {
+    case "delete":
+      await Song.updateMany(
+        {
+          _id: { $in: idsArray },
+        },
+        {
+          deleted: true,
+          deletedAt: Date.now(),
+        }
+      );
+      res.redirect(PATH + "/songs");
+      break;
+
+    case "active":
+      await Song.updateMany(
+        {
+          _id: { $in: idsArray },
+        },
+        {
+          status: "active",
+        }
+      );
+      res.redirect(PATH + "/songs");
+      break;
+    case "inactive":
+      await Song.updateMany(
+        {
+          _id: { $in: idsArray },
+        },
+        {
+          status: "inactive",
+        }
+      );
+      res.redirect(PATH + "/songs");
+      break;
+  }
+};

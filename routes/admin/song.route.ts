@@ -33,5 +33,6 @@ router.patch(
 
 router.delete("/delete/:id", controller.deleteSong);
 router.patch("/changeStatus/:id/:status", controller.changeStatus);
+router.patch("/change-mutil", controller.changeMutil)
 
 export const songsRouter: Router = router;

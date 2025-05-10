@@ -21,7 +21,7 @@ function showFlashMessage(message) {
 //PREVIEW IMAGE
 const inputImage = document.querySelector("[inputImage]");
 const previewImage = document.querySelector("[previewImage]");
-if(inputImage){
+if (inputImage) {
     inputImage.addEventListener("change", (e) => {
         const file = e.target.files[0];;
         const fileReader = new FileReader();
@@ -33,19 +33,19 @@ if(inputImage){
 };
 
 const closePreview = document.querySelector(".close-preview");
-if(closePreview){
+if (closePreview) {
     closePreview.addEventListener("click", () => {
         inputImage.value = "";
-        previewImage.src="";
+        previewImage.src = "";
     })
 }
 //END PREVIEW IMAGE
 
 //PREVIEW AUDIO
 const inputAudio = document.querySelector("[inputAudio]");
-const previewAudio =  document.querySelector("[previewAudio]");
-if(inputAudio){
-    inputAudio.addEventListener("change" , (e) => {
+const previewAudio = document.querySelector("[previewAudio]");
+if (inputAudio) {
+    inputAudio.addEventListener("change", (e) => {
         const file = e.target.files[0];
         const fileReader = new FileReader();
         fileReader.onload = () => {
@@ -56,33 +56,33 @@ if(inputAudio){
 }
 
 const closePreviewAudio = document.querySelector(".close-preview-audio");
-if(closePreviewAudio){
+if (closePreviewAudio) {
     closePreviewAudio.addEventListener("click", () => {
         inputAudio.value = "";
-        previewAudio.src="";
+        previewAudio.src = "";
     })
 }
 //END PREVIEW AUDIO
 
 //Nút Xóa
 const buttonDelete = document.querySelectorAll("[button-delete]");
-if(buttonDelete){
+if (buttonDelete) {
     buttonDelete.forEach(button => {
         button.addEventListener("click", () => {
             const idSong = button.getAttribute("data-id");
             const nameType = button.getAttribute("name-type")
             const link = `${PATH}/${nameType}/delete/${idSong}`;
             const isConfirm = confirm("Bạn có muốn xóa bài hát này không?");
-            if(isConfirm){
-                fetch(link, {method: "DELETE"})
+            if (isConfirm) {
+                fetch(link, { method: "DELETE" })
                     .then(res => res.json())
                     .then(data => {
-                        if(data.code == 200) {
+                        if (data.code == 200) {
                             setTimeout(() => {
                                 location.reload()
                             }, 2000)
                             showFlashMessage(data.message);
-                        } else  {
+                        } else {
                             showFlashMessage(data.message)
                         }
                     })
@@ -95,7 +95,7 @@ if(buttonDelete){
 
 //button change status
 const buttonChangeStatus = document.querySelectorAll("[button-change-status]");
-if(buttonChangeStatus){
+if (buttonChangeStatus) {
     buttonChangeStatus.forEach(button => {
         button.addEventListener("click", () => {
             const id = button.getAttribute("data-id");
@@ -103,10 +103,10 @@ if(buttonChangeStatus){
             const nameType = button.getAttribute("name-type");
             const statusChange = statusCurrent === "active" ? "inactive" : "active";
             const link = `${PATH}/${nameType}/changeStatus/${id}/${statusChange}`;
-            fetch(link, {method: "PATCH"})
+            fetch(link, { method: "PATCH" })
                 .then(res => res.json())
                 .then(data => {
-                    if(data.code == 200){
+                    if (data.code == 200) {
                         showFlashMessage(data.message);
                         setTimeout(() => {
                             location.reload()
@@ -134,3 +134,56 @@ buttonPanigation.forEach(button => {
     }
 })
 //end panigation
+
+
+//CheckBoxMutil
+const CheckBoxMutil = document.querySelector("[name='checkall']");
+if (CheckBoxMutil) {
+    const checkBoxIds = document.querySelectorAll("[name='id']")
+    CheckBoxMutil.addEventListener("click", () => {
+        if (CheckBoxMutil.checked) {
+            checkBoxIds.forEach(item => {
+                item.checked = true;
+            })
+        } else {
+            checkBoxIds.forEach(item => {
+                item.checked = false;
+            })
+        }
+    });
+    checkBoxIds.forEach(item => {
+        item.addEventListener("click", () => {
+            const countChecked = document.querySelectorAll("[name='id']:checked").length;
+            if (countChecked == checkBoxIds.length) {
+                CheckBoxMutil.checked = true;
+            } else {
+                CheckBoxMutil.checked = false;
+            }
+        })
+    })
+}
+//End CheckBoxMutil
+
+//Form change mutil
+const formChangeMutil = document.querySelector("[form-change-mutil]");
+if (formChangeMutil) {
+    formChangeMutil.addEventListener("submit", (e) => {
+        const inputIds = formChangeMutil.querySelector("input[name='ids']");
+        e.preventDefault()
+        const inputChecked = document.querySelectorAll("[name='id']:checked");
+        let ids = [];
+        if (e.target[0].value != "--Chọn hành động--") {
+            inputChecked.forEach(item => {
+                ids.push(item.value)
+            })
+        }
+        if(ids.length > 0) {
+            inputIds.value = ids;
+            formChangeMutil.submit()
+        }
+
+
+    })
+
+}
+//End Form change mutil

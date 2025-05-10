@@ -147,3 +147,49 @@ export const deleteTopic =  async (req:Request, res:Response):Promise<void> => {
         })
     }
 }
+
+//[PATCH] /topics/change-mutil
+export const changeMutil = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const idsArray = req.body.ids.split(",");
+  const typeEdit: string = req.body.type;
+  switch (typeEdit) {
+    case "delete":
+      await Topics.updateMany(
+        {
+          _id: { $in: idsArray },
+        },
+        {
+          deleted: true,
+          deletedAt: Date.now(),
+        }
+      );
+      res.redirect(PATH + "/topics");
+      break;
+
+    case "active":
+      await Topics.updateMany(
+        {
+          _id: { $in: idsArray },
+        },
+        {
+          status: "active",
+        }
+      );
+      res.redirect(PATH + "/topics");
+      break;
+    case "inactive":
+      await Topics.updateMany(
+        {
+          _id: { $in: idsArray },
+        },
+        {
+          status: "inactive",
+        }
+      );
+      res.redirect(PATH + "/topics");
+      break;
+  }
+};

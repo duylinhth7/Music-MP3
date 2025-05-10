@@ -13,6 +13,7 @@ const PATH = systemConfig.prefixAdmin;
 // [GET] /singers/index
 export const index = async(req:Request, res:Response):Promise<void> => {
     let find = {
+        deleted: false
     };
     //Panigation
     const countSingers = await Singers.countDocuments({deleted: false});
@@ -34,7 +35,7 @@ export const index = async(req:Request, res:Response):Promise<void> => {
         const stringSlugRegex = new RegExp(slug, "i");
         find["$or"] = [{ fullName: keywordRegex }, { slug: stringSlugRegex }];
       }
-      console.log(find)
+
     
       //end search
 
@@ -154,3 +155,49 @@ export const deleteSinger =  async (req:Request, res:Response):Promise<void> => 
         })
     }
 }
+
+//[PATCH] /singets/change-mutil
+export const changeMutil = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const idsArray = req.body.ids.split(",");
+  const typeEdit: string = req.body.type;
+  switch (typeEdit) {
+    case "delete":
+      await Singers.updateMany(
+        {
+          _id: { $in: idsArray },
+        },
+        {
+          deleted: true,
+          deletedAt: Date.now(),
+        }
+      );
+      res.redirect(PATH + "/singer");
+      break;
+
+    case "active":
+      await Singers.updateMany(
+        {
+          _id: { $in: idsArray },
+        },
+        {
+          status: "active",
+        }
+      );
+      res.redirect(PATH + "/singer");
+      break;
+    case "inactive":
+      await Singers.updateMany(
+        {
+          _id: { $in: idsArray },
+        },
+        {
+          status: "inactive",
+        }
+      );
+      res.redirect(PATH + "/singer");
+      break;
+  }
+};

@@ -25,5 +25,6 @@ router.post(
   controller.createPost
 );
 router.delete("/delete/:id", controller.deleteSinger);
+router.patch("/change-mutil", controller.changeMutil)
 
 export const singersRouter: Router = router;
