@@ -1,14 +1,17 @@
 extends ../../layouts/default.pug
 include ../../mixins/panigation.pug
+include ../../mixins/search.pug
 block main 
     //- div #{songs}
     .card-body 
         .row
-        .col-3.mb-3
-            if(1)
-                a(  href=`${prefixAdmin}/songs/create`
-                    class="btn btn-outline-success"
-                ) + Thêm bài hát mới
+            .col-3.mb-3
+                if(1)
+                    a(  href=`${prefixAdmin}/songs/create`
+                        class="btn btn-outline-success"
+                    ) + Thêm bài hát mới
+            .col-3.mb-3 
+                +search(keyword)
 
 
         table(class="table table-hover table-sm"

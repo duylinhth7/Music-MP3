@@ -1,13 +1,16 @@
 extends ../../layouts/default.pug
 include ../../mixins/panigation.pug
+include ../../mixins/search.pug
 block main 
     .card-body 
         .row
-        .col-3.mb-3
-            if(1)
-                a(href=`${prefixAdmin}/topics/create`
-                    class="btn btn-outline-success"
-                ) + Thêm mới chủ đề
+            .col-3.mb-3 
+                +search()
+            .col-3.mb-3
+                if(1)
+                    a(href=`${prefixAdmin}/topics/create`
+                        class="btn btn-outline-success"
+                    ) + Thêm mới chủ đề
 
 
         table(class="table table-hover table-sm"

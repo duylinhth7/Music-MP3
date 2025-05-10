@@ -3,6 +3,7 @@ import Singers from "../../models/admin/singer.model"
 import panigationHelper from "../../helpers/panigation";
 import { systemConfig } from "../../config/system";
 import { features } from "process";
+import unidecodeText from "../../helpers/unidecode";
 
 
 
@@ -11,7 +12,8 @@ const PATH = systemConfig.prefixAdmin;
 
 // [GET] /singers/index
 export const index = async(req:Request, res:Response):Promise<void> => {
-
+    let find = {
+    };
     //Panigation
     const countSingers = await Singers.countDocuments({deleted: false});
     const objectPanigation = panigationHelper(
@@ -24,10 +26,18 @@ export const index = async(req:Request, res:Response):Promise<void> => {
     );
     //End Panigation
 
+      //search
+      if (req.query.keyword) {
+        const keyword: string = `${req.query.keyword}`;
+        const keywordRegex: RegExp = new RegExp(keyword, "i");
+        const slug = unidecodeText(keyword);
+        const stringSlugRegex = new RegExp(slug, "i");
+        find["$or"] = [{ fullName: keywordRegex }, { slug: stringSlugRegex }];
+      }
+      console.log(find)
+    
+      //end search
 
-    let find = {
-        deleted: false
-    };
     const singers = await Singers.find(find).limit(objectPanigation.limitItems).skip(objectPanigation.skipItems);
     res.render("admin/pages/singers/index", {
         title: "Danh sách ca sỹ",

@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import Topics from "../../models/admin/topic.model";
 import panigationHelper from "../../helpers/panigation";
 import { systemConfig } from "../../config/system";
+import unidecodeText from "../../helpers/unidecode";
 
 const PATH: string = systemConfig.prefixAdmin;
 // [GET] /topics/index
@@ -19,10 +20,21 @@ export const index = async (req: Request, res: Response) => {
     countTopics
   );
   //End Panigation
+
+    //search
+    if (req.query.keyword) {
+      const keyword: string = `${req.query.keyword}`;
+      const keywordRegex: RegExp = new RegExp(keyword, "i");
+      const slug = unidecodeText(keyword);
+      const stringSlugRegex = new RegExp(slug, "i");
+      find["$or"] = [{ title: keywordRegex }, { slug: stringSlugRegex }];
+    }
+  
+    //end search
+
   const topics = await Topics.find(find)
     .limit(objectPanigation.limitItems)
     .skip(objectPanigation.skipItems);
-    console.log(topics)
   res.render("admin/pages/topics/index", {
     topics: topics,
     title: "Danh sách chủ đề",
