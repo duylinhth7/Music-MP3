@@ -1,5 +1,5 @@
 .header {
-    background-color: rgb(43, 39, 39);
+    background-color: #1f2937;
     padding: 20px 0;
     position: fixed;
     width: 100%;
@@ -15,19 +15,24 @@
     font-weight: 600;
 }
 
+
+/* END HEADER */
+
 .body {
     box-sizing: border-box;
     display: flex;
     margin-top: 60px; /* Đẩy nội dung xuống dưới header */
 }
 
+
+/* Phần sider */
 .body .sider {
     width: 200px; /* Điều chỉnh độ rộng */
     height: calc(100vh - 60px); /* Trừ đi chiều cao của header */
     position: fixed;
     top: 60px; /* Để tránh bị header che */
     left: 0;
-    background-color: rgb(71, 68, 68);
+    background-color: #1f2937;
     color: #fff;
     padding-top: 10px;
 }
@@ -49,11 +54,19 @@
     padding: 10px;
 }
 
-.menu li a {
+.sider .menu a {
+    color: #cbd5e1;
     text-decoration: none;
-    color: #fff;
+    font-weight: 500;
+    padding: 10px 15px;
     display: block;
-}
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+
+/* end phần sider */
+
+
 .preview-image{
     padding: 20px;
     width: 150px;

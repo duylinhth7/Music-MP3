@@ -15,10 +15,11 @@ block main
             .col-3.mb-3 
                 +search(keyword)
         .row 
-            .col-6
+            .col-4
                 +formChangeMutil(`${prefixAdmin}/singers/change-mutil?_method=PATCH`)
-            .col-6 
+            .col-4
                 +filterStatus(filterStatus)
+
 
 
 
