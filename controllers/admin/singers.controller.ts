@@ -4,6 +4,7 @@ import panigationHelper from "../../helpers/panigation";
 import { systemConfig } from "../../config/system";
 import { features } from "process";
 import unidecodeText from "../../helpers/unidecode";
+import { filterStatus } from "../../helpers/filterStatus";
 
 
 
@@ -35,15 +36,21 @@ export const index = async(req:Request, res:Response):Promise<void> => {
         const stringSlugRegex = new RegExp(slug, "i");
         find["$or"] = [{ fullName: keywordRegex }, { slug: stringSlugRegex }];
       }
-
-    
       //end search
+
+      //Filter Status
+      const filterStatusRecord = filterStatus(req.query);
+      if(req.query.status){
+        find["status"] = req.query.status
+      }
+      //End filter Status
 
     const singers = await Singers.find(find).limit(objectPanigation.limitItems).skip(objectPanigation.skipItems);
     res.render("admin/pages/singers/index", {
         title: "Danh sách ca sỹ",
         singers: singers,
-        panigation: objectPanigation
+        panigation: objectPanigation,
+        filterStatus: filterStatusRecord
     })
 }
 

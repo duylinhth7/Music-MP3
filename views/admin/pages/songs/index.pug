@@ -2,6 +2,7 @@ extends ../../layouts/default.pug
 include ../../mixins/panigation.pug
 include ../../mixins/search.pug
 include ../../mixins/form-change-mutil.pug
+include ../../mixins/filter-status.pug
 block main 
     //- div #{songs}
     .card-body 
@@ -15,8 +16,10 @@ block main
                 +search(keyword)
 
         .row 
-            .col-12 
+            .col-6 
                 +formChangeMutil(`${prefixAdmin}/songs/change-mutil?_method=PATCH`)
+            .col-6
+                +filterStatus(filterStatus)
 
         table(class="table table-hover table-sm"
                 checkbox-mutil

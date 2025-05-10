@@ -3,6 +3,7 @@ import Topics from "../../models/admin/topic.model";
 import panigationHelper from "../../helpers/panigation";
 import { systemConfig } from "../../config/system";
 import unidecodeText from "../../helpers/unidecode";
+import { filterStatus } from "../../helpers/filterStatus";
 
 const PATH: string = systemConfig.prefixAdmin;
 // [GET] /topics/index
@@ -29,8 +30,14 @@ export const index = async (req: Request, res: Response) => {
       const stringSlugRegex = new RegExp(slug, "i");
       find["$or"] = [{ title: keywordRegex }, { slug: stringSlugRegex }];
     }
-  
     //end search
+
+    //Filter Status
+    const filterStatusRecord = filterStatus(req.query);
+    if(req.query.status){
+      find["status"] = req.query.status;
+    }
+    //End filter Status
 
   const topics = await Topics.find(find)
     .limit(objectPanigation.limitItems)
@@ -39,6 +46,7 @@ export const index = async (req: Request, res: Response) => {
     topics: topics,
     title: "Danh sách chủ đề",
     panigation: objectPanigation,
+    filterStatus: filterStatusRecord
   });
 };
 

@@ -5,6 +5,7 @@ import Topics from "../../models/admin/topic.model";
 import { systemConfig } from "../../config/system";
 import panigationHelper from "../../helpers/panigation";
 import unidecodeText from "../../helpers/unidecode";
+import { filterStatus } from "../../helpers/filterStatus";
 
 const PATH = systemConfig.prefixAdmin;
 // [GET] /songs/index
@@ -35,6 +36,14 @@ export const index = async (req: Request, res: Response): Promise<void> => {
 
   //end search
 
+  //Filter Status
+  const filterStatusRecord = filterStatus(req.query);
+  if(req.query.status){
+    find["status"] = req.query.status
+  }
+  
+  //End Filter Status
+
   const songs = await Song.find(find)
     .select("-description -lyrics")
     .limit(objectPanigation.limitItems)
@@ -52,6 +61,7 @@ export const index = async (req: Request, res: Response): Promise<void> => {
     title: "Danh sách bài hát",
     songs: songs,
     panigation: objectPanigation,
+    filterStatus: filterStatusRecord
   });
 };
 

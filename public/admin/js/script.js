@@ -186,4 +186,23 @@ if (formChangeMutil) {
     })
 
 }
-//End Form change mutil
+//End Form change 
+
+
+//Filter Status
+const filterStatus = document.querySelectorAll("[button-status]");
+if(filterStatus){
+    const url = new URL(window.location.href);
+    filterStatus.forEach(button => {
+        button.addEventListener("click", () => {
+            const status = button.getAttribute("button-status");
+            if(status){
+                url.searchParams.set("status", status);
+            } else {
+                url.searchParams.delete("status")
+            };
+            window.location.href = url.href;
+        })
+    })
+}
+//End Filter Status
