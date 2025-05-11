@@ -6,6 +6,8 @@ import { singersRouter } from "./singer.route";
 import { topicsRouter } from "./topic.route";
 import { authRouter } from "./auth.route";
 import { authAdminMiddleware } from "../../middleware/admin/authAdminMiddleware";
+import { accountsRouter } from "./account.route";
+import { roleRouter } from "./role.route";
 
 const indexRouterAdmin = (app: Express) => {
   const PATH = systemConfig.prefixAdmin;
@@ -14,5 +16,7 @@ const indexRouterAdmin = (app: Express) => {
   app.use(PATH + "/singers", authAdminMiddleware, singersRouter);
   app.use(PATH + "/topics", authAdminMiddleware, topicsRouter);
   app.use(PATH + "/auth", authRouter);
+  app.use(PATH + "/accounts", authAdminMiddleware, accountsRouter)
+  app.use(PATH + "/role", authAdminMiddleware, roleRouter)
 };
 export default indexRouterAdmin;
