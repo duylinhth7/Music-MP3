@@ -1,15 +1,20 @@
 extends ../../layouts/default.pug
 include ../../mixins/box-head.pug
 
-block main
-    .container 
-        +box-head("Trang đăng nhập")
-        form(action="/user/login" method="POST")
-            div(class="mb-3")
-                label(class="form-label") Email 
-                input(type=email class="form-control" name="email" required placeholder="Nhập email...")
-            div(class="mb-3")
-                label(class="form-label") Password 
-                input(type="password" class="form-control" name="password" placeholder="Nhập password..." required)
-            div(class="mb-3")
-                button(type="submit" class="btn btn-primary") Đăng nhập
+block css 
+    link(rel="stylesheet", href="/client/css/login.css")
+block main 
+        div(class="form-login")
+            div(class="body-login")
+                div(class="title") Login
+                form(action="/user/login" method="POST")
+                    div(class="mb-3")
+                        label(class="form-label") Email 
+                        input(type=email class="form-control" name="email" required placeholder="Nhập email của bạn...")
+                    div(class="mb-3")
+                        label(class="form-label") Password 
+                        input(type="password" class="form-control" name="password" placeholder="Nhập password của bạn..." required)
+                    div(class="mb-3 forget-password")
+                        a(href="/user/password/forget") Quên mật khẩu?
+                    div(class="mb-3 button-submit")
+                        button(type="submit" class="btn btn-primary") Đăng nhập
