@@ -8,7 +8,7 @@ block main
         .card-body 
             .row 
                 .col-3 
-                    if(1)
+                    if(role.permissions.includes("role_create"))
                         a(  href=`${prefixAdmin}/role/create`
                             class="btn btn-outline-success"
                         ) + Thêm mới
@@ -42,15 +42,15 @@ block main
                                 td #{item.title}
                                 td !{item.description}
                                 td 
-                                    if(1)
+                                    if(role.permissions.includes("role_view"))
                                         a(class="btn btn-sm btn-secondary",
                                             href=`${prefixAdmin}/role/detail/${item.id}`
                                         ) Chi tiết 
-                                    if(1)
+                                    if(role.permissions.includes("role_edit"))
                                         a(class="btn btn-sm btn-warning",
                                             href=`${prefixAdmin}/role/edit/${item.id}`
                                         ) Sửa 
-                                    if(1)
+                                    if(role.permissions.includes("role_delete"))
                                         a(class="btn btn-sm btn-danger",
                                             button-delete 
                                             data-id = item.id

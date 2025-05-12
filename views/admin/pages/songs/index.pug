@@ -8,7 +8,7 @@ block main
     .card-body 
         .row
             .col-3.mb-3
-                if(1)
+                if(role.permissions.includes("song_create"))
                     a(  href=`${prefixAdmin}/songs/create`
                         class="btn btn-outline-success"
                     ) + Thêm bài hát mới
@@ -17,7 +17,8 @@ block main
 
         .row 
             .col-6 
-                +formChangeMutil(`${prefixAdmin}/songs/change-mutil?_method=PATCH`)
+                if(role.permissions.includes("song_edit"))
+                    +formChangeMutil(`${prefixAdmin}/songs/change-mutil?_method=PATCH`)
             .col-6
                 +filterStatus(filterStatus)
 
@@ -56,7 +57,7 @@ block main
                         td #{item.infoSinger.fullName}
                         td #{item.topic.title}
                         td
-                            if(1)
+                            if(role.permissions.includes("song_edit"))
                                 if(item.status == "active")
                                     button(
                                         type="button"
@@ -95,17 +96,17 @@ block main
                         //-     if(updatedName)
                         //-         p #{updatedName.accountFullName}
                         td
-                            if(1)
+                            if(role.permissions.includes("song_view"))
                                 a(
                                     class="btn btn-info"
                                     href=`${prefixAdmin}/product/detail/${item.id}`
                                 ) Chi tiết
-                            if(1)
+                            if(role.permissions.includes("song_edit"))
                                 a(
                                     class="btn btn-warning btn-sm"
                                     href=`${prefixAdmin}/songs/edit/${item.id}`
                                 ) Sửa
-                            if(1)
+                            if(role.permissions.includes("song_delete"))
                                 button(class="btn btn-danger btn-sm ml-1"
                                         button-delete 
                                         data-id = item.id
