@@ -9,5 +9,9 @@ router.post("/register", userValidate.register, controller.registerPost);
 router.get("/logout", controller.logout);
 router.get("/login", controller.login);
 router.post("/login", userValidate.login, controller.loginPost);
+router.get("/password/forget", controller.forget);
+router.post("/password/forget", userValidate.forgetPassword, controller.forgetPost);
+router.post("/password/otp", userValidate.otpPassword, controller.otpPost)
+router.post("/password/reset", userValidate.resetPassword, controller.resetPassword)
 
 export const userRouter: Router = router;
