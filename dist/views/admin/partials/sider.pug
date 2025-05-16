@@ -1,0 +1,25 @@
+.sider
+    ul.menu
+
+        li 
+            a(href=`${prefixAdmin}/dashboard`) Tổng quan
+        li 
+            a(href=`${prefixAdmin}/settings/general`) Cài đặt chung
+        if(role.permissions.includes("song_view"))
+            li
+                a(href=`${prefixAdmin}/songs`) Danh sách bài hát
+        if(role.permissions.includes("singer_view"))
+            li
+                a(href=`${prefixAdmin}/singers`) Danh sách ca sĩ
+        if(role.permissions.includes("topic_view"))
+            li
+                a(href=`${prefixAdmin}/topics`) Danh mục chủ đề
+        if(role.permissions.includes("accounts_view"))
+            li
+                a(href=`${prefixAdmin}/accounts`) Danh sách tài khoản
+        if(role.permissions.includes("role_view"))
+            li
+                a(href=`${prefixAdmin}/role`) Nhóm quyền
+        if(role.permissions.includes("role_edit"))
+            li
+                a(href=`${prefixAdmin}/role/permission`) Phân quyền

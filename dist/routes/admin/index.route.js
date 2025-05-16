@@ -1,0 +1,24 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const system_1 = require("../../config/system");
+const dashboard_route_1 = require("./dashboard.route");
+const song_route_1 = require("./song.route");
+const singer_route_1 = require("./singer.route");
+const topic_route_1 = require("./topic.route");
+const auth_route_1 = require("./auth.route");
+const authAdminMiddleware_1 = require("../../middleware/admin/authAdminMiddleware");
+const account_route_1 = require("./account.route");
+const role_route_1 = require("./role.route");
+const setting_route_1 = require("./setting.route");
+const indexRouterAdmin = (app) => {
+    const PATH = system_1.systemConfig.prefixAdmin;
+    app.use(PATH + "/dashboard", authAdminMiddleware_1.authAdminMiddleware, dashboard_route_1.dashboardRouter);
+    app.use(PATH + "/songs", authAdminMiddleware_1.authAdminMiddleware, song_route_1.songsRouter);
+    app.use(PATH + "/singers", authAdminMiddleware_1.authAdminMiddleware, singer_route_1.singersRouter);
+    app.use(PATH + "/topics", authAdminMiddleware_1.authAdminMiddleware, topic_route_1.topicsRouter);
+    app.use(PATH + "/auth", auth_route_1.authRouter);
+    app.use(PATH + "/accounts", authAdminMiddleware_1.authAdminMiddleware, account_route_1.accountsRouter);
+    app.use(PATH + "/role", authAdminMiddleware_1.authAdminMiddleware, role_route_1.roleRouter);
+    app.use(PATH + "/settings", authAdminMiddleware_1.authAdminMiddleware, setting_route_1.settingRouter);
+};
+exports.default = indexRouterAdmin;

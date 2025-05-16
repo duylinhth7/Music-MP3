@@ -1,0 +1,33 @@
+header.header
+    .container 
+        .row
+            .col-3 
+                .inner-logo
+                    a(href="/")
+                        img(src=settings.logo)
+            .col-9.d-flex 
+                .inner-search 
+                    form(
+                        class="d-flex form-suggest"
+                        action="/search/detail"
+                        method="GET"
+                    ) 
+                        input.form-control.me-2(type="search", name="keyword" placeholder="Search", aria-label="Search")
+                        button.btn.btn-success(type="submit") Search
+                        .inner-suggest.show
+                            a(href="ok" class="inner-list")
+
+                .inner-menu
+                    ul 
+                        li 
+                            a(href="/") Trang chủ
+                        li 
+                            a(href="/topics") Chủ đề
+                        if(user)
+                            li 
+                                a(href="/user/logout") Đăng xuất
+                        else
+                            li
+                                a(href="/user/login") Đăng nhập 
+                            li
+                                a(href="/user/register") Đăng ký

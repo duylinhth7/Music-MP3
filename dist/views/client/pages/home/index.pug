@@ -1,0 +1,41 @@
+extends ../../layouts/default.pug
+
+block main
+  // Banner
+  section.banner(
+    style="background: linear-gradient(to right, #6b46c1, #4c51bf); color: white; padding: 40px; text-align: center;"
+  )
+    h1 Khám phá thế giới âm nhạc
+    p Nghe nhạc miễn phí, không giới hạn mọi lúc mọi nơi
+    a(
+      href="/topics"
+      style="background: white; color: #6b46c1; padding: 10px 20px; border-radius: 20px; display: inline-block; margin-top: 10px; text-decoration: none;"
+    ) Bắt đầu nghe
+
+  // Nghệ sĩ nổi bật
+  section.artists(style="padding: 30px;")
+    h2(style="margin-bottom: 20px;") Nghệ sĩ nổi bật
+    .artist-list(style="display: flex; flex-wrap: wrap; gap: 20px;")
+      each singer in singers
+        .artist(style="width: 100px; text-align: center;")
+          img(
+            src=singer.avatar
+            alt=singer.name
+            style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover;"
+          )
+          p(style="margin-top: 8px; font-weight: 500;") #{singer.fullName}
+
+  // Bài hát nổi bật
+  section.featured-songs(style="padding: 30px; background-color: #f9f9f9;")
+    h2(style="margin-bottom: 20px;") Bài hát nổi bật
+    .song-list(style="display: flex; flex-wrap: wrap; gap: 20px;")
+      each song in songFeatured
+        .song-card(style="width: 200px; background: white; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); overflow: hidden;")
+          img(
+            src=song.avatar
+            alt=song.title
+            style="width: 100%; height: 120px; object-fit: cover;"
+          )
+          .song-info(style="padding: 10px;")
+            h4(style="font-size: 16px; margin: 0 0 6px;") #{song.title}
+            p(style="font-size: 14px; color: #666; margin: 0;") #{song.singer}

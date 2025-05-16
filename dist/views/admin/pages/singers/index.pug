@@ -1,0 +1,113 @@
+extends ../../layouts/default.pug
+include ../../mixins/panigation.pug
+include ../../mixins/search.pug
+include ../../mixins/form-change-mutil.pug
+include ../../mixins/filter-status.pug
+
+block main 
+    .card-body 
+        .row
+            .col-3.mb-3
+                if(role.permissions.includes("singer_create"))
+                    a(  href=`${prefixAdmin}/singers/create`
+                        class="btn btn-outline-success"
+                    ) + Thêm ca sĩ mới
+            .col-3.mb-3 
+                +search(keyword)
+        .row 
+            .col-4
+                if(role.permissions.includes("singer_edit"))
+                    +formChangeMutil(`${prefixAdmin}/singers/change-mutil?_method=PATCH`)
+            .col-4
+                +filterStatus(filterStatus)
+
+
+
+
+        table(class="table table-hover table-sm"
+                checkbox-mutil
+            )
+            thead 
+                tr 
+                    th 
+                        input(type="checkbox"
+                                name="checkall"
+                            )
+                    th STT 
+                    th Hình ảnh 
+                    th Tên ca sĩ
+                    th Trạng thái 
+                    //- th Người tạo
+                    //- th Người chỉnh sửa gần nhất
+                    th Hành động
+            tbody
+                each item, index in singers
+                    tr 
+                        td 
+                            input(type="checkbox"
+                                    name="id"
+                                    value=item.id
+                            )
+                        td #{index+1}
+                        td 
+                            img(src=item.avatar,
+                            width="50px",
+                            height="auto")
+                        td #{item.fullName}
+                        td
+                            if(role.permissions.includes("singer_edit"))
+                                if(item.status == "active")
+                                    button(
+                                        type="button"
+                                        class="badge bg-success"
+                                        data-status = item.status 
+                                        data-id = item.id
+                                        name-type="singers"
+                                        button-change-status
+                                    ) Hoạt động
+                                else
+                                    button(
+                                        type="button"
+                                        class="badge bg-danger"
+                                        data-status = item.status 
+                                        data-id = item.id
+                                        name-type="singers"
+                                        button-change-status
+                                    ) Ngưng hoạn động
+                            else 
+                                if(item.status == "active")
+                                    button(
+                                        readOnly
+                                        type="button"
+                                        class="badge bg-success"
+                                    ) Hoạt động
+                                else
+                                    button(
+                                        type="button"
+                                        class="badge bg-danger"
+                                    ) Ngưng hoạn động
+                        //- td 
+                        //-     p #{item.accountFullName}
+                        //-     +formatDate(item.createdBy.createdAt)
+                        //- td 
+                        //-     - const updatedName = item.updatedBy[item.updatedBy.length - 1]
+                        //-     if(updatedName)
+                        //-         p #{updatedName.accountFullName}
+                        td
+                            if(role.permissions.includes("singer_view"))
+                                a(
+                                    class="btn btn-info"
+                                    href=`${prefixAdmin}/product/detail/${item.id}`
+                                ) Chi tiết
+                            if(role.permissions.includes("singer_edit"))
+                                a(
+                                    class="btn btn-warning btn-sm"
+                                    href=`${prefixAdmin}/singers/edit/${item.id}`
+                                ) Sửa
+                            if(role.permissions.includes("singer_delete"))
+                                button(class="btn btn-danger btn-sm ml-1"
+                                        button-delete 
+                                        data-id = item.id
+                                        name-type="singers"
+                                        ) Xóa
+    +panigation(panigation)
