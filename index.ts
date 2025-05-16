@@ -15,9 +15,9 @@ const app: Express =  express();
 const port:number | string = process.env.PORT || 3000;
 
 
-app.use(express.static("public"))
+app.use(express.static(`${__dirname}/public`))
 app.use(mothodOverride("_method"))
-app.set("views", "./views");
+app.set("views", `${__dirname}/views`);
 app.set("view engine", "pug");
 app.use(bodyParser.urlencoded())
 app.use(cookieParser());
