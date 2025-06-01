@@ -3,13 +3,21 @@ include ../../mixins/box-head.pug
 
 block main
   .container.my-5
-    +box-head("Các chủ đề bài hát")
+    +box-head("🎵 Các chủ đề bài hát")
+
     .row
       each item in topics
-        .col-md-4.mb-4
-          .card.shadow-sm.border-0.h-100.transition(style="border-radius: 12px; overflow: hidden;")
-            img.card-img-top(src=item.avatar alt=item.title style="height: 200px; object-fit: cover;")
+        .col-md-3.mb-4
+          .card.h-100.shadow.border-0.transition.card-topic
+            img.card-img-top(
+              src=item.avatar 
+              alt=item.title 
+            )
             .card-body.text-center
-              h5.card-title.mb-2 #{item.title}
+              h5.card-title.mb-2.text-primary #{item.title}
               p.card-text.text-muted(style="min-height: 60px") !{item.description}
-              a.btn.btn-outline-primary(href=`/songs/${item.slug}`) Xem chi tiết
+              a.btn.btn-primary.btn-sm.rounded-pill.mt-2(
+                href=`/songs/${item.slug}`
+              ) Xem chi tiết
+block css 
+  link(rel="stylesheet", href="/client/css/topic.css")

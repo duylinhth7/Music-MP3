@@ -128,7 +128,10 @@ if (formSearch) {
                     boxList.innerHTML = htmls.join("");
                 }
             })
-
+        if(!keyword){
+            const innerSuggest = formSearch.querySelector(".inner-suggest");    
+            innerSuggest.classList.remove("show")
+        }
     })
 }
 //END SEARCH SUGGEST

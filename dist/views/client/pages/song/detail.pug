@@ -1,29 +1,59 @@
 extends ../../layouts/default.pug
 include ../../mixins/box-head.pug
+include ../../mixins/format-date.pug
+
+
 block css 
-    link(rel="stylesheet", href="/client/css/song-detail.css")
+  link(rel="stylesheet", href="/client/css/song-detail.css")
+
 block main 
-    .container 
-        +box-head(song.title)
-        .inner-action 
-            div(class="inner-time") <i class="fa-regular fa-clock"></i> 20/10/2024
-            div(class="inner-singer") <i class="fa-solid fa-microphone"></i> #{singer.fullName}
-            a(class="inner-topic" href=`/songs/${topic.slug}`) <i class="fa-solid fa-music"></i> #{topic.title}
-            div(class="inner-view") <i class="fa-solid fa-headphones"></i> #{song.view} Lượt nghe
-            if(user)
-                div(class=user && song.like.includes(user.id) ? "inner-like active" : "inner-like" id-user=user.id) <i class="fa-regular fa-thumbs-up"></i>
-                    span #{song.like.length} thích 
-                div(class=(user && user.favourite.includes(song.id) ? "inner-favourite active" : "inner-favourite"))  <i class="fa-regular fa-heart"></i> Bài hát yêu thích 
-            else 
-                div(class="inner-like")  <i class="fa-regular fa-thumbs-up"></i>
-                    span #{song.like.length} thích 
-                div(class= "inner-favourite")  <i class="fa-regular fa-heart"></i> Bài hát yêu thích 
-        .inner-play(dataSong = song dataSinger = singer) 
-            div(class="inner-image")
-                img(src=song.avatar)
-            div(id="aplayer")
-        .inner-info 
-            .inner-description !{song.description}
-            .inner-lyrics !{song.lyrics}
-block script 
-        
+  .container.py-4
+    +box-head(song.title)
+
+    .d-flex.flex-wrap.gap-3.align-items-center.mb-4.text-muted.fw-medium(style="font-size: 14px;")
+      div 
+        i.fa-regular.fa-clock.me-1
+        +formatDate(song.createdAt)
+      div 
+        i.fa-solid.fa-microphone.me-1
+        | #{singer.fullName}
+      a.text-decoration-none.text-primary(href=`/songs/${topic.slug}`)
+        i.fa-solid.fa-music.me-1
+        | #{topic.title}
+      div 
+        i.fa-solid.fa-headphones.me-1
+        | #{song.view} Lượt nghe
+
+      if user
+        div(
+          class=(song.like.includes(user.id) ? "inner-like active d-inline-flex align-items-center text-success" : "inner-like d-inline-flex align-items-center")
+          id-user=user.id
+        )
+          i.fa-regular.fa-thumbs-up.me-1
+          span #{song.like.length} thích 
+        div(
+          class=(user.favourite.includes(song.id) ? "inner-favourite active d-inline-flex align-items-center text-danger" : "inner-favourite d-inline-flex align-items-center")
+        )
+          i.fa-regular.fa-heart.me-1
+          | Bài hát yêu thích 
+      else
+        div.inner-like.d-inline-flex.align-items-center
+          i.fa-regular.fa-thumbs-up.me-1
+          span #{song.like.length} thích 
+        div.inner-favourite.d-inline-flex.align-items-center
+          i.fa-regular.fa-heart.me-1
+          | Bài hát yêu thích 
+
+    .inner-play.mt-4(dataSong=song dataSinger=singer)
+      .inner-image.mb-3(style="max-width: 320px;")
+        img(src=song.avatar class="img-fluid rounded shadow")
+      #aplayer
+
+    .inner-info.mt-5
+      .inner-description.mb-4
+        h5.text-primary.mb-2 Mô tả bài hát
+        div !{song.description}
+
+      .inner-lyrics
+        h5.text-primary.mb-2 Lời bài hát
+        div !{song.lyrics}

@@ -1,9 +1,29 @@
 extends ../../layouts/default.pug
 
 block main
-    h1.mb-4 Trang tổng quan
-    ul
-        li Tổng số người dùng: <b>#{totalUser}</b>
-        li Tổng số người dùng: <b>#{totalUser}</b>
-        li Tổng số ca sĩ: <b>#{totalSinger}</b>
-        li Tổng số chủ đề: <b>#{totalTopic}</b>
+  h1.mb-4.mt-4 Trang tổng quan
+
+  .row
+    .col-md-3.mb-3
+      .card.text-center.shadow
+        .card-body
+          h5.card-title Tổng số người dùng
+          b.card-text.fs-4.text-primary #{totalUser}
+
+    .col-md-3.mb-3
+      .card.text-center.shadow
+        .card-body
+          h5.card-title Tổng số bài hát
+          b.card-text.fs-4.text-primary #{totalSong}
+
+    .col-md-3.mb-3
+      .card.text-center.shadow
+        .card-body
+          h5.card-title Tổng số ca sĩ
+          b.card-text.fs-4.text-success #{totalSinger}
+
+    .col-md-3.mb-3
+      .card.text-center.shadow
+        .card-body
+          h5.card-title Tổng số chủ đề
+          b.card-text.fs-4.text-warning #{totalTopic}

@@ -1,0 +1,16 @@
+.card-topic {
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.card-topic img.card-img-top {
+  height: 200px;
+  object-fit: cover;
+  width: auto;
+}
+
+.card-topic:hover {
+  transform: scale(1.02);
+}

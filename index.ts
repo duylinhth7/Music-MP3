@@ -8,6 +8,7 @@ import cookieParser from "cookie-parser";
 import indexRouterAdmin from './routes/admin/index.route';
 import { systemConfig } from './config/system';
 import mothodOverride from "method-override";
+import moment from "moment"
 
 dotenv.config();
 database.connect();
@@ -23,6 +24,7 @@ app.use(bodyParser.urlencoded())
 app.use(cookieParser());
 app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
 app.locals.prefixAdmin = systemConfig.prefixAdmin
+app.locals.moment = moment
 
 //Router
 indexRouterClient(app);

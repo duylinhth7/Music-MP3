@@ -1,34 +1,23 @@
 extends ../../layouts/auth.pug
- 
+
 block main 
-    .container.my-5 
-        .row.justify-content-center
-            .col-8 
-                    h1(class="text-center") Đăng nhập
-                    form(
-                            action=`${prefixAdmin}/auth/login`
-                            method='POST'
-                        )
-                        div(class="form-group form-login")
-                            label(for="email") Email: 
-                            input(
-                                type="text"
-                                class="form-control"
-                                id="email"
-                                name="email"
-                                required
-                            )
-                        div(class="form-group mb-4")
-                            label(for="password") Mật khẩu: 
-                            input(
-                                type="text"
-                                class="form-control"
-                                id="password"
-                                name="password"
-                                required
-                                )
-                        div(class="form-group")
-                            button(
-                                type="submit"
-                                class="btn btn-primary btn-block"
-                            ) Đăng nhập
+  .container.my-5
+    .row.justify-content-center
+      .col-md-6.col-lg-5
+        .card.shadow
+          .card-body.p-4
+            h2.text-center.mb-4.text-primary Đăng nhập admin
+
+            form(
+              action=`${prefixAdmin}/auth/login`
+              method="POST"
+            )
+              .mb-3
+                label.form-label(for="email") Email
+                input#email.form-control(type="email", name="email", required, placeholder="Nhập email của bạn")
+
+              .mb-4
+                label.form-label(for="password") Mật khẩu
+                input#password.form-control(type="password", name="password", required, placeholder="Nhập mật khẩu")
+
+              button.btn.btn-primary.w-100(type="submit") Đăng nhập
